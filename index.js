@@ -1,5 +1,5 @@
-const contactService = require("./contacts");
-require("yargs").argv;
+const contactService = require("./contacts.js");
+const argv = require("yargs").argv;
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
@@ -9,12 +9,18 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       break;
 
     case "get":
+      const ContactById = await contactService.getContactById(id);
+      console.log(ContactById);
       break;
 
     case "add":
+      const addContact = await contactService.addContact(name, email, phone);
+      console.log(addContact);
       break;
 
     case "remove":
+      const removeContact = await contactService.removeContact(id);
+      console.log(removeContact);
       break;
 
     default:
@@ -22,4 +28,4 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-invokeAction({ action: "list" });
+invokeAction(argv);
